@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var process = require('process');
 
 var routes = require('./routes/index');
 var categories = require('./routes/categories');
@@ -58,7 +59,7 @@ app.use(function(err, req, res, next) {
 });
 
 // connection to MondoDB
-mongoose.connect('mongodb://localhost/bookmarkManagerApp', function(err) {
+mongoose.connect('mongodb://' + process.env.MONGODB_URI, function(err) {
     if (err) {
         console.log('connection error', err);
     } else {
