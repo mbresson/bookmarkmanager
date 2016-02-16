@@ -1,0 +1,15 @@
+{
+  "name": "bookmark-manager",
+  "description": "A short project for KRDS that consists in an AngularJS module allowing the user to organize bookmarks into categories",
+  "version": "0.0.1",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.4.x",
+    "angular-route": "1.4.x",
+    "angular-loader": "1.4.x",
+    "angular-resource": "1.4.x",
+    "bootstrap": "^3.3.6",
+    "angular-mosaic": "^1.0.0"
+  }
+}
