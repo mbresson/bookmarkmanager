@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang='en' ng-app='app'>
+    <head>
+        <title>Bookmarks Manager</title>
+
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-route/angular-route.min.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+        <script src="bower_components/angular-mosaic/angular-mosaic.js"></script>
+        <script src="javascripts/controllers/categories.js"></script>
+
+        <link type="text/css" rel="stylesheet" href="stylesheets/style.css" />
+        <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    </head>
+
+    <body ng-controller='CategoryController'>
+        <ng-view></ng-view>
+
+        <h1>Manage your bookmarks</h1>
+
+        <div id='categories'>
+            <div ng-repeat="category in categories" class='category' ng-init="categoryIndex = $index">
+                <button type="button" class="btn btn-danger btn-sm remove-category" ng-click="removeCategory(categoryIndex)">X</button>
+                <h2>{{ category.name }}</h2>
+                
+                <ul ng-show='category.bookmarks.length' class='bookmarks'>
+                    <li ng-repeat='bookmark in category.bookmarks' class='bookmark'>
+                        <a href='{{ bookmark.url }}' title='{{ bookmark.name }}' target='_blank'>{{ bookmark.name }}</a>
+                        <button type="button" class="btn btn-warning btn-xs remove-bookmark" ng-click="removeBookmarkFrom(categoryIndex, $index)">X</button>
+                    </li><!-- .bookmark -->
+                </ul><!-- .bookmarks -->
+
+                <h4 ng-hide='category.bookmarks.length'>No bookmarks yet</h4>
+            </div><!-- .category -->
+        </div><!-- #categories -->
+
+        <h2 ng-hide='categories.length'>No bookmark categories yet</h2>
+
+        <form name='newCategoryForm' class='new-category-form' novalidate>
+            <h4>Add a category</h4>
+
+            <label for='form-category-name'>Name: </label>
+            <input type='text' ng-model='newCategory' name='newCategory' required />
+
+            <input type='submit' class='btn btn-primary' ng-click='addCategory()' value='Add' />
+        </form><!-- .new-category-form -->
+
+        <form name='newBookmarkForm' ng-show='categories.length' class='bookmark-form' novalidate>
+            <h4>Add a bookmark</h4>
+
+            <select ng-model='bookmarkCategory' name='bookmark-category' id='form-bookmark-category' ng-init='bookmarkCategory = "0"'>
+                <option ng-repeat="category in categories" value="{{$index}}">{{category.name}}</option>
+            </select>
+
+            <label for='form-bookmark-name'>Name: </label>
+            <input type='text' ng-model='bookmark.name' required name='bookmark-name' id='form-bookmark-name' />
+
+            <label for='form-bookmark-url'>URL: </label>
+            <input type='text' ng-model='bookmark.url' required name='bookmark-url' id='form-bookmark-url' />
+
+            <input type='submit' class='btn btn-primary' ng-click='addBookmarkTo(bookmarkCategory, bookmark, newBookmarkForm)' value='Add' />
+        </form>
+
+    </body>
+</html>
